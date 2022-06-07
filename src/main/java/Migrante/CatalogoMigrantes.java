@@ -19,4 +19,14 @@ public class CatalogoMigrantes {
 		}
     	return null;
     }
+    
+    public static List<Migrante> getMigrante(int contacto) {
+    	List<Migrante> familia = new ArrayList<Migrante>();
+    	for (Migrante migrante : Migrantes) {
+			if(migrante.contacto == contacto) {
+				familia.add(migrante);
+			}
+		}
+    	return familia;
+    }
 }

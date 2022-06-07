@@ -13,7 +13,7 @@ public class CatalogoVoluntarios {
     
     public static Voluntario getVoluntario(int contacto){
     	for(Voluntario voluntario : listVoluntario) {
-    		if(voluntario.contacto == contacto) {
+    		if(voluntario.getContacto() == contacto) {
     			return voluntario;
     		}
     	}

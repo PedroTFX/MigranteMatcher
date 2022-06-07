@@ -17,7 +17,7 @@ public class MigranteHandler {
     private Region reg = new Region();
     private List<Ajuda> listAjudas;
     private Migrante m;
-    private int contacto;
+    private int contacto = -1;
     
     public int numPessoas;
 
@@ -44,18 +44,14 @@ public class MigranteHandler {
     }
     
     public void pedirRegioes() {
-    	while(true) {
-    		Scanner scanner = new Scanner(System.in);
-    		
-    		System.out.println("Opcoes: \n 1 - obter lista de regioes");
-    		
-    		if(scanner.nextInt() == 1) {
-    			System.out.println(reg.getRegionsList());
-    			break;
-    		}else {
-    			System.out.println("Opcao invalida tente outra vez");
-    		}
+    	Scanner scanner = new Scanner(System.in);
+		System.out.println("Opcoes: \n 1 - obter lista de regioes");
+    	while(scanner.nextInt() != 1) {
+    		System.out.println("Opcao invalida tente outra vez");
     	}
+		System.out.println(reg.getRegionsList());
+		
+    	scanner.close();
     }
     
     public void indicaRegiao(String regiao) {
@@ -74,10 +70,20 @@ public class MigranteHandler {
     }
     
     public void confirmar() {
-    	for(Ajuda a : listAjudas) {
-    		m.ajudasSelecionadas.add(a);
+    	if(contacto != -1) {
+    		List<Migrante> familia = CatalogoMigrantes.getMigrante(contacto);
+    		contacto = -1;
+    		for (Migrante migrante : familia) {
+    			for(Ajuda a : listAjudas) {
+    				migrante.ajudasSelecionadas.add(a);
+            	}
+			}
+    	}else {
+    		for(Ajuda a : listAjudas) {
+        		m.ajudasSelecionadas.add(a);
+        	}
     	}
-    	CatalogoAjudas.removeAjudas(null, m.getListAjudas());
+    	CatalogoAjudas.removeAjudas(m.getListAjudas());
     }
     public void sendSMS(int contacto, String mensagem);
 

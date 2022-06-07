@@ -12,8 +12,8 @@ public class MigrantMatcher {
 	
 	private String getCommands() {
 		String ret = "volunatrio - iniciar sessao como voluntario \n"
-					+ " migrante - iniciar sessao como migrante \n"
-					+ " exit - sair do programa \n";
+					+ "migrante - iniciar sessao como migrante \n"
+					+ "exit - sair do programa \n";
 						
 		return ret;
 	}
