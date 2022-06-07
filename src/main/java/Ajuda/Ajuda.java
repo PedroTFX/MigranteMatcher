@@ -20,6 +20,18 @@ public class Ajuda {
     public Voluntario getVoluntario(){
         return vol;
     }
+    
+    public String getType() {
+    	return tipoAjuda;
+    }
+    
+    public String getDescricao() {
+    	return descricao;
+    }
+    
+    public int getNumPessoas() {
+    	return numPessoas;
+    }
 
     public void createAjuda(String tipoAjuda){
         CatalogoAjudas.addAjuda(new Ajuda(tipoAjuda));
