@@ -3,9 +3,13 @@ package main.java.Ajuda;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pidgeonsmssender.sdk.PidgeonSMSSender;
+
 public class CatalogoAjudas {
     public static List<Ajuda> listAjudas = new ArrayList<Ajuda>();
-
+    private static String defaultSMS = "Ajuda requisitada:";
+    
+    
     public static void addAjuda(Ajuda a){
         listAjudas.add(a);
     }
@@ -33,9 +37,13 @@ public class CatalogoAjudas {
     }
 
     public static void removeAjudas(List<Ajuda> listaAjuda2){
+    	
+    	PidgeonSMSSender sender = new PidgeonSMSSender();
+    	
         for (Ajuda ajuda1 : listAjudas) {
             for (Ajuda ajuda2 : listaAjuda2) {
                 if(checkAjuda(ajuda1, ajuda2)){
+                	sender.send(String.valueOf(ajuda2.getVoluntario().getContacto()), defaultSMS + ajuda2.toString());
                 	listAjudas.remove(ajuda2);
                 }
             }
@@ -57,5 +65,15 @@ public class CatalogoAjudas {
     	}
     	
     	return true;
+    }
+    
+    public static Ajuda getAjuda(String a) {
+    	for (Ajuda ajuda : listAjudas) {
+			if(ajuda.toString().equals(a)) {
+				return ajuda;
+			}
+		}
+    	System.out.println("A ajuda selecionada não se encontra na lista tente de novo");
+    	return null;
     }
 }

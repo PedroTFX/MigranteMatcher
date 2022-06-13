@@ -1,28 +1,26 @@
 package main.java.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+
+import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 
 import main.java.Region;
 import main.java.Ajuda.Ajuda;
-import main.java.Migrante.CatalogoMigrantes;
+import main.java.Ajuda.CatalogoAjudas;
 import main.java.Voluntario.CatalogoVoluntarios;
 import main.java.Voluntario.Voluntario;
 
 public class VoluntarioHandler {
 	
-	private List<Ajuda> listAjudas;
 	final String ITEM = "item";
 	final String ALOJ = "alojamento";
 	private Region reg;
 	private Ajuda ajuda;
 	private Voluntario voluntario;
 	
-	void indentificaVoluntario(int contacto) {
-		if((voluntario = CatalogoVoluntarios.getVoluntario(contacto)) != null) {
+	private void identificaVoluntario(int contacto) {
+		if(!CatalogoVoluntarios.hasVoluntario(contacto)) {
 			CatalogoVoluntarios.addNewVol(contacto);
-    		listAjudas = new ArrayList<Ajuda>();
     	}
 	}
 	
@@ -46,8 +44,12 @@ public class VoluntarioHandler {
 			setRegiao(scanner.nextLine());
 			
 		}
-		listAjudas.add(ajuda);
+		CatalogoAjudas.listAjudas.add(ajuda);
 		scanner.close();
+		
+		PidgeonSMSSender sender = new PidgeonSMSSender();
+		voluntario.setCodigo(CatalogoAjudas.listAjudas.size());
+		sender.send(String.valueOf(voluntario.getContacto()), String.valueOf(voluntario.getCodigo()));
 	}
 	
 	void setRegiao(String regiao) {
@@ -63,6 +65,19 @@ public class VoluntarioHandler {
 		ajuda.numPessoas = numPessoas;
 	}
 	
-	void confirmarSMS(int codigo);
+	boolean confirmarSMS(int codigo) {
+		return codigo == voluntario.getCodigo();
+	}
+	
+	public void runVoluntarioHandler() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Indique o seu contacto telefonico");
+			identificaVoluntario(sc.nextInt());
+		System.out.println(" - Alojamento \n - Item");
+			getTypeOfHelp(sc.nextLine());
+		System.out.println("insira o codigo de confirmacao");
+			confirmarSMS(voluntario.getCodigo());
+		sc.close();
+	}
 	
 }

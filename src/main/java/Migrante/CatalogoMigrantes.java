@@ -29,4 +29,8 @@ public class CatalogoMigrantes {
 		}
     	return familia;
     }
+    
+    public static boolean hasMigrante(String nome, int contacto) {
+    	return Migrantes.contains(new Migrante(nome, contacto));
+    }
 }

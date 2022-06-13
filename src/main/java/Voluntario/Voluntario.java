@@ -10,6 +10,10 @@ public class Voluntario {
     public int getCodigo(){
         return codigo;
     }
+    
+    public void setCodigo(int codigo) {
+    	this.codigo = codigo;
+    }
 
     public boolean verifySMS(int codigo, int cod){
         return codigo == cod;

@@ -2,6 +2,9 @@ package main.java.MigrantMatcher;
 
 import java.util.Scanner;
 
+import main.java.handlers.MigranteHandler;
+import main.java.handlers.VoluntarioHandler;
+
 
 
 public class MigrantMatcher {
@@ -10,36 +13,36 @@ public class MigrantMatcher {
 	final String MIGRANTE = "migrante";
 	final String EXIT = "exit";
 	
-	private String getCommands() {
+	private void getCommands() {
 		String ret = "volunatrio - iniciar sessao como voluntario \n"
 					+ "migrante - iniciar sessao como migrante \n"
 					+ "exit - sair do programa \n";
-						
-		return ret;
+		System.out.println(ret);				
 	}
 	
 	private void Run() {
+		Scanner sc = new Scanner(System.in);
 		while (true) {
-			Scanner sc = new Scanner(System.in);
+			getCommands();
+			
 			
 			if(sc.nextLine().equals(VOLUNATRIO)) {
-				//RUN VOL CODE
+				VoluntarioHandler vHandler = new VoluntarioHandler();
+				vHandler.runVoluntarioHandler();
 			}else if(sc.nextLine().equals(MIGRANTE)) {
-				//RUN MIG CODE
+				MigranteHandler mHandler = new MigranteHandler();
+				mHandler.runMigranteHandler();
 			}else if(sc.nextLine().equals(EXIT)) {
-				sc.close();
 				break;
 			}else {
 				System.out.println("Comando nao existe por favor tente de novo");
 			}
 		}
+		sc.close();
 	}
-	
-	
 	
 	public void main(String[] args) {
 		getCommands();
 		Run();
-		
 	}
 }
