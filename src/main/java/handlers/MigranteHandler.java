@@ -4,14 +4,10 @@ import main.java.Ajuda.Ajuda;
 import main.java.Ajuda.CatalogoAjudas;
 import main.java.Migrante.CatalogoMigrantes;
 import main.java.Migrante.Migrante;
-import main.java.Voluntario.CatalogoVoluntarios;
-import main.java.Voluntario.Voluntario;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import org.graalvm.compiler.phases.graph.ScheduledNodeIterator;
 
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 
