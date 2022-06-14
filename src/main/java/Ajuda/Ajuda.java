@@ -10,9 +10,9 @@ public class Ajuda {
 
     public Ajuda(String tipoAjuda){
         this.tipoAjuda = tipoAjuda;
-        if(tipoAjuda.equals("item")){
+        if(tipoAjuda.equals("Item")){
             numPessoas = -1;
-        }else if(tipoAjuda.equals("alojamento")){
+        }else if(tipoAjuda.equals("Alojamento")){
             descricao = null;
         }
     }
@@ -32,15 +32,19 @@ public class Ajuda {
     public int getNumPessoas() {
     	return numPessoas;
     }
+    
+    public void setRegiao(String regiao) {
+    	this.regiao = regiao;
+    }
 
     public void createAjuda(String tipoAjuda){
         CatalogoAjudas.addAjuda(new Ajuda(tipoAjuda));
     }
 
     public String toString(){
-        String ret = (tipoAjuda.equals("item")) ? 
-         "Item - Descricao: " + descricao :
-         "Alojamento - numero de Pessoas: " + numPessoas;
+        String ret = (tipoAjuda.equals("Item")) ? 
+         " Item - Descricao: " + descricao :
+         " Alojamento - numPessoas: " + numPessoas + " Localização: " + regiao + " ";
         return ret;
     }
 }

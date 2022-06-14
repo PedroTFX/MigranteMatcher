@@ -12,48 +12,46 @@ import main.java.Voluntario.Voluntario;
 
 public class VoluntarioHandler {
 	
-	final String ITEM = "item";
-	final String ALOJ = "alojamento";
-	private Region reg;
-	private Ajuda ajuda;
+	final String ITEM = "Item";
+	final String ALOJ = "Alojamento";
+	public Ajuda ajuda;
 	private Voluntario voluntario;
 	
 	private void identificaVoluntario(int contacto) {
 		if(!CatalogoVoluntarios.hasVoluntario(contacto)) {
 			CatalogoVoluntarios.addNewVol(contacto);
     	}
+		voluntario = CatalogoVoluntarios.getVoluntario(contacto);
 	}
 	
 	void getTypeOfHelp(String tipoAjuda) {
-		ajuda.vol = voluntario;
-		Scanner scanner = new Scanner(System.in);
 		
 		if(tipoAjuda.equals(ITEM)) {
 			ajuda = new Ajuda(ITEM);
-			
+			ajuda.vol = voluntario;
 			System.out.println("Indique o uma breve descricao do item:");
-			item(scanner.nextLine());
+			String desc = new Scanner(System.in).nextLine();
+			item(desc);
 			
 		}else if(tipoAjuda.equals(ALOJ)){
 			ajuda = new Ajuda(ALOJ);
-			
+			ajuda.vol = voluntario;
 			System.out.println("Indique o numero max de pessoas para o alojamento:");
-			giveAloj(scanner.nextInt());
+			int numPessoas = new Scanner(System.in).nextInt();
+			giveAloj(numPessoas);
 			
 			System.out.println("Indique a regiao do alojamento:");
-			setRegiao(scanner.nextLine());
+			String regiao = new Scanner(System.in).nextLine();
+			setRegiao(regiao);
 			
 		}
-		CatalogoAjudas.listAjudas.add(ajuda);
-		scanner.close();
-		
 		PidgeonSMSSender sender = new PidgeonSMSSender();
 		voluntario.setCodigo(CatalogoAjudas.listAjudas.size());
 		sender.send(String.valueOf(voluntario.getContacto()), String.valueOf(voluntario.getCodigo()));
 	}
 	
 	void setRegiao(String regiao) {
-		ajuda.regiao = reg.addRegion(regiao);
+		ajuda.setRegiao(new Region().addRegion(regiao));
 		
 	}
 	
@@ -70,14 +68,20 @@ public class VoluntarioHandler {
 	}
 	
 	public void runVoluntarioHandler() {
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Indique o seu contacto telefonico");
-			identificaVoluntario(sc.nextInt());
-		System.out.println(" - Alojamento \n - Item");
-			getTypeOfHelp(sc.nextLine());
-		System.out.println("insira o codigo de confirmacao");
-			confirmarSMS(voluntario.getCodigo());
-		sc.close();
+			int contacto = new Scanner(System.in).nextInt();
+			identificaVoluntario(contacto);
+		System.out.println("Pretende oferecer qual tipo de ajuda? \n - Alojamento \n - Item");
+			String typeOfHelp = new Scanner(System.in).nextLine();
+			getTypeOfHelp(typeOfHelp);
+		System.out.println("Insira o codigo de confirmacao");
+			int codigo = new Scanner(System.in).nextInt();
+			if(confirmarSMS(codigo)) {
+				CatalogoAjudas.listAjudas.add(ajuda);
+				System.out.println("Adicionou a ajuda :" + ajuda.toString() + ", com sucesso!");
+			}else {
+				System.out.println("Better luck next time introducing the code");
+			}
 	}
 	
 }

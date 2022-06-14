@@ -6,6 +6,7 @@ import main.java.Migrante.CatalogoMigrantes;
 import main.java.Migrante.Migrante;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,11 +46,11 @@ public class MigranteHandler {
     
     public void pedirRegioes() {
     	Scanner scanner = new Scanner(System.in);
-		System.out.println("Opcoes: \n 1 - obter lista de regioes");
+		System.out.println("1 - obter lista de regioes");
     	while(scanner.nextInt() != 1) {
     		System.out.println("Opcao invalida tente outra vez");
     	}
-		System.out.println(reg.getRegionsList());
+		System.out.println(Arrays.toString(reg.getRegionsList()));
 		
     	scanner.close();
     }
@@ -87,35 +88,33 @@ public class MigranteHandler {
     }
     
     public void runMigranteHandler() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Indique o seu nome e contacto telefonico ou \"familia *numero de pessoas*\" ");
-			String[] temp = sc.nextLine().split(" ");
+		System.out.println("Indique o seu *nome contacto* ou \"familia *numero de pessoas*\" ");
+			String[] temp = new Scanner(System.in).nextLine().split(" ");
 			if(temp[0].equals("familia")) {
 				System.out.println("Indique o nome do cabeça de casal");
-				String nome = sc.nextLine();
+				String nome = new Scanner(System.in).nextLine();
 				System.out.println("Indique o do cabeça de casal");
-				contacto = sc.nextInt();
+				contacto = new Scanner(System.in).nextInt();
 				cabeçaDeCasal(nome, contacto);
 				for(int i = 0; i < Integer.parseInt(temp[1]); i++) {
 					System.out.println("Indique o nome do prox. membro");
-					nome = sc.nextLine();
+					nome = new Scanner(System.in).nextLine();
 					registaMembro(nome);
 				}
 			}else {
 				indentificaMigrante(temp[0], Integer.parseInt(temp[1]));
 			}
-			System.out.println("Select one of the options: \n - lista de regioes");
+			System.out.println("Selecione uma das opções por numero:");
 			pedirRegioes();
-			indicaRegiao(sc.nextLine());
+			String reg = new Scanner(System.in).nextLine();
+			indicaRegiao(reg);
 			System.out.println("Escreva exatamente o que quer(dica: copie a ajuda da lista ;) ) \n Para confirmar escreva \"confirmar\" ");
 			String temp2 = "";
 			while(!temp2.equals("confirmar")) {
 				escolherAjuda(CatalogoAjudas.getAjuda(temp2));
-				temp2 = sc.nextLine();
+				temp2 = new Scanner(System.in).nextLine();
 			}
 			confirmar();
-			
-		sc.close();
 	}
 
 }

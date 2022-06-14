@@ -1,5 +1,6 @@
 package main.java;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,17 +27,17 @@ public class Region {
     		 "Vila Real",
     		 "Viseu"};
       
-      private List<String> availableReg;
+      private static List<String> availableReg = new ArrayList<String>();
       
       public String selectedRegion;
       
       private boolean checkRegions(String reg) {
     	  for (String regiao : listaRegioes) {
-			if(!regiao.equals(reg)) {
-				return false;
+			if(regiao.equals(reg)) {
+				return true;
 			}
 		  }
-    	  return true;
+    	  return false;
       }
       
       public String addRegion(String reg) {
