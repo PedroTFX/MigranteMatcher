@@ -23,6 +23,11 @@ public class CatalogoVoluntarios {
     }
     
     public static boolean hasVoluntario(int contacto) {
-    	return Voluntarios.contains(new Voluntario(contacto));
+    	for (Voluntario voluntario : Voluntarios) {
+			if(voluntario.getContacto() == contacto) {
+				return true;
+			}
+		}
+    	return false;
     }
 }

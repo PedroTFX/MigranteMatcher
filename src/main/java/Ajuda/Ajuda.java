@@ -43,8 +43,8 @@ public class Ajuda {
 
     public String toString(){
         String ret = (tipoAjuda.equals("Item")) ? 
-         " Item - Descricao: " + descricao :
-         " Alojamento - numPessoas: " + numPessoas + " Localização: " + regiao + " ";
+         "Item - Descricao: " + descricao :
+         "Alojamento - numPessoas: " + numPessoas + " Localização: " + regiao;
         return ret;
     }
 }

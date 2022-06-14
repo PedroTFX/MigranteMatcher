@@ -25,6 +25,10 @@ public class VoluntarioHandler {
 	}
 	
 	void getTypeOfHelp(String tipoAjuda) {
+		while (!tipoAjuda.equals(ITEM) && !tipoAjuda.equals(ALOJ)) {
+			System.out.println("*selecione uma das opcoes*");
+			tipoAjuda = new Scanner(System.in).nextLine();
+		}
 		
 		if(tipoAjuda.equals(ITEM)) {
 			ajuda = new Ajuda(ITEM);
@@ -69,13 +73,29 @@ public class VoluntarioHandler {
 	
 	public void runVoluntarioHandler() {
 		System.out.println("Indique o seu contacto telefonico");
-			int contacto = new Scanner(System.in).nextInt();
+			int contacto = -1;
+			while(contacto == -1) {
+				String contc = new Scanner(System.in).nextLine();
+				try {
+					contacto = Integer.parseInt(contc);
+				} catch (NumberFormatException e) {
+				    System.out.println("*isso nao é um numero tenta outra vez*");
+				}
+			}
 			identificaVoluntario(contacto);
 		System.out.println("Pretende oferecer qual tipo de ajuda? \n - Alojamento \n - Item");
 			String typeOfHelp = new Scanner(System.in).nextLine();
 			getTypeOfHelp(typeOfHelp);
 		System.out.println("Insira o codigo de confirmacao");
-			int codigo = new Scanner(System.in).nextInt();
+			int codigo = -1;
+			while(codigo == -1) {
+				String contc = new Scanner(System.in).nextLine();
+				try {
+					codigo = Integer.parseInt(contc);
+				} catch (NumberFormatException e) {
+				    System.out.println("*isso nao é um numero tenta outra vez*");
+				}
+			}
 			if(confirmarSMS(codigo)) {
 				CatalogoAjudas.listAjudas.add(ajuda);
 				System.out.println("Adicionou a ajuda :" + ajuda.toString() + ", com sucesso!");

@@ -31,6 +31,11 @@ public class CatalogoMigrantes {
     }
     
     public static boolean hasMigrante(String nome, int contacto) {
-    	return Migrantes.contains(new Migrante(nome, contacto));
+    	for (Migrante migrante : Migrantes) {
+			if(migrante.nome.equals(nome) && migrante.contacto == contacto) {
+				return true;
+			}
+		}
+    	return false;
     }
 }

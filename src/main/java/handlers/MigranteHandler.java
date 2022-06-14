@@ -7,6 +7,7 @@ import main.java.Migrante.Migrante;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public class MigranteHandler {
     		CatalogoMigrantes.addMigrante(nome, contacto);
     		listAjudas = new ArrayList<Ajuda>();
     	}
+		m = CatalogoMigrantes.getMigrante(nome, contacto);
     }
     
     public void indentificaMigrante(int numPessoas) {
@@ -45,14 +47,13 @@ public class MigranteHandler {
     }
     
     public void pedirRegioes() {
-    	Scanner scanner = new Scanner(System.in);
 		System.out.println("1 - obter lista de regioes");
-    	while(scanner.nextInt() != 1) {
+		int temp = new Scanner(System.in).nextInt();
+    	while(temp != 1) {
     		System.out.println("Opcao invalida tente outra vez");
+    		temp = new Scanner(System.in).nextInt();
     	}
 		System.out.println(Arrays.toString(reg.getRegionsList()));
-		
-    	scanner.close();
     }
     
     public void indicaRegiao(String regiao) {
@@ -64,6 +65,7 @@ public class MigranteHandler {
     	for(Ajuda ajuda : list) {
     		System.out.println(ajuda.toString());
     	}
+    	System.out.println("");
     }
     
     public void escolherAjuda(Ajuda ajuda) {
@@ -72,7 +74,7 @@ public class MigranteHandler {
     }
     
     public void confirmar() {
-    	List<Migrante> allMembersList = new ArrayList<Migrante>();
+    	List<Migrante> allMembersList = CatalogoMigrantes.getMigrante(contacto);
     	for (Migrante migrante : allMembersList) {
     		for (Ajuda a : listAjudas) {
     			migrante.ajudasSelecionadas.add(a);
@@ -90,14 +92,27 @@ public class MigranteHandler {
     public void runMigranteHandler() {
 		System.out.println("Indique o seu *nome contacto* ou \"familia *numero de pessoas*\" ");
 			String[] temp = new Scanner(System.in).nextLine().split(" ");
+			while(temp.length <= 1 || temp.length > 2) {
+					System.out.println("*algo de errado nao esta certo tente de novo*");
+					System.out.println("Indique o seu *nome contacto* ou \"familia *numero de pessoas*\" ");
+				temp = new Scanner(System.in).nextLine().split(" ");
+			}
 			if(temp[0].equals("familia")) {
-				System.out.println("Indique o nome do cabeça de casal");
+					System.out.println("Indique o nome do cabeça de casal");
 				String nome = new Scanner(System.in).nextLine();
-				System.out.println("Indique o do cabeça de casal");
-				contacto = new Scanner(System.in).nextInt();
+					System.out.println("Indique o contacto do cabeça de casal");
+				int contacto = -1;
+				while(contacto == -1) {
+					String contc = new Scanner(System.in).nextLine();
+					try {
+						contacto = Integer.parseInt(contc);
+					} catch (NumberFormatException e) {
+					    System.out.println("*isso nao é um numero tenta outra vez*");
+					}
+				}
 				cabeçaDeCasal(nome, contacto);
 				for(int i = 0; i < Integer.parseInt(temp[1]); i++) {
-					System.out.println("Indique o nome do prox. membro");
+						System.out.println("Indique o nome do prox. membro");
 					nome = new Scanner(System.in).nextLine();
 					registaMembro(nome);
 				}
@@ -108,10 +123,14 @@ public class MigranteHandler {
 			pedirRegioes();
 			String reg = new Scanner(System.in).nextLine();
 			indicaRegiao(reg);
-			System.out.println("Escreva exatamente o que quer(dica: copie a ajuda da lista ;) ) \n Para confirmar escreva \"confirmar\" ");
+			System.out.println("Escreva exatamente o que quer(dica: copie a ajuda da lista ;) ) \nPara confirmar escreva \"confirmar\" ");
 			String temp2 = "";
 			while(!temp2.equals("confirmar")) {
-				escolherAjuda(CatalogoAjudas.getAjuda(temp2));
+				if(CatalogoAjudas.hasAjuda(temp2)) {
+					escolherAjuda(CatalogoAjudas.getAjuda(temp2));
+				}else {
+					System.out.println("selecione uma opção da lista");
+				}
 				temp2 = new Scanner(System.in).nextLine();
 			}
 			confirmar();

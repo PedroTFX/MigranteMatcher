@@ -42,7 +42,7 @@ public class Region {
       
       public String addRegion(String reg) {
     	  while(!checkRegions(reg)) {
-    		  System.out.println("Regiao nao existe, tente um  Portugal");
+    		  System.out.println("Regiao nao existe, tente uma de Portugal");
     		  reg = new Scanner(System.in).nextLine();
     	  }
     	  availableReg.add(reg);

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 
+import main.java.Voluntario.Voluntario;
+
 public class CatalogoAjudas {
     public static List<Ajuda> listAjudas = new ArrayList<Ajuda>();
     private static String defaultSMS = "Ajuda requisitada:";
@@ -29,7 +31,7 @@ public class CatalogoAjudas {
     public static List<Ajuda> getAjudasFilter(String regiao, List<Ajuda> ajudas){
         List<Ajuda> ajudasReg = new ArrayList<Ajuda>();
         for (Ajuda ajuda : listAjudas) {
-            if(ajuda.tipoAjuda.equals("item") || ajuda.regiao.equals(regiao)){
+            if(ajuda.tipoAjuda.equals("Item") || ajuda.regiao.equals(regiao)){
                 ajudasReg.add(ajuda);
             }
         }
@@ -40,9 +42,9 @@ public class CatalogoAjudas {
     	
     	PidgeonSMSSender sender = new PidgeonSMSSender();
     	
-        for (Ajuda ajuda1 : listAjudas) {
+        for (int i = 0; i < listAjudas.size();i++) {
             for (Ajuda ajuda2 : listaAjuda2) {
-                if(checkAjuda(ajuda1, ajuda2)){
+                if(checkAjuda(listAjudas.get(i), ajuda2)){
                 	sender.send(String.valueOf(ajuda2.getVoluntario().getContacto()), defaultSMS + ajuda2.toString());
                 	listAjudas.remove(ajuda2);
                 }
@@ -51,20 +53,12 @@ public class CatalogoAjudas {
     }
     
     private static boolean checkAjuda(Ajuda ajuda1,Ajuda ajuda2) {
-    	if(ajuda1.getVoluntario().getContacto() != ajuda1.getVoluntario().getContacto()) {
-    		return false;
+    	if(ajuda1.getVoluntario().getContacto() == ajuda2.getVoluntario().getContacto()) {
+    		if(ajuda1.toString().equals(ajuda2.toString())){
+        		return true;
+        	}
     	}
-    	if(!ajuda1.getDescricao().equals(ajuda2.getDescricao())) {
-    		return false;
-    	}
-    	if(ajuda1.getNumPessoas() != ajuda2.getNumPessoas()) {
-    		return false;
-    	}
-    	if(ajuda1.getType().equals(ajuda2.getType())) {
-    		return false;
-    	}
-    	
-    	return true;
+    	return false;
     }
     
     public static Ajuda getAjuda(String a) {
@@ -75,5 +69,14 @@ public class CatalogoAjudas {
 		}
     	System.out.println("A ajuda selecionada não se encontra na lista tente de novo");
     	return null;
+    }
+    
+    public static boolean hasAjuda(String descOfHelp) {
+    	for (Ajuda ajuda : listAjudas) {
+			if(ajuda.toString().equals(descOfHelp)) {
+				return true;
+			}
+		}
+    	return false;
     }
 }
