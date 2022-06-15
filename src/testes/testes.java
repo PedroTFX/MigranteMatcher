@@ -33,14 +33,14 @@ public class testes {
 	
 	@Test
 	void createFamilia() {
-		String cabeçaDeCasal = "Ambrosio";
+		String cabecaDeCasal = "Ambrosio";
 		String mem1 = "marta";
 		String mem2 = "martim";
 		String mem3 = "marionete";
 		String mem4 = "mario";
 		int contacto = 0;
 		MigranteHandler migranteHandler = new MigranteHandler();
-		migranteHandler.cabeçaDeCasal(cabeçaDeCasal, contacto);
+		migranteHandler.cabecaDeCasal(cabecaDeCasal, contacto);
 		migranteHandler.registaMembro(mem1);
 		migranteHandler.registaMembro(mem2);
 		migranteHandler.registaMembro(mem3);

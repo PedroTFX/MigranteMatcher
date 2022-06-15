@@ -37,7 +37,7 @@ public class MigranteHandler {
     	this.numPessoas = numPessoas;
     }
     
-    public void cabeçaDeCasal(String nome, int contacto) {
+    public void cabecaDeCasal(String nome, int contacto) {
     	indentificaMigrante(nome, contacto);
     	this.contacto = contacto;
     }
@@ -109,7 +109,7 @@ public class MigranteHandler {
 					    System.out.println("*isso nao é um numero tenta outra vez*");
 					}
 				}
-				cabeçaDeCasal(nome, contacto);
+				cabecaDeCasal(nome, contacto);
 				for(int i = 0; i < Integer.parseInt(temp[1]); i++) {
 						System.out.println("Indique o nome do prox. membro");
 					nome = new Scanner(System.in).nextLine();
