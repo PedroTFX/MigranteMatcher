@@ -28,8 +28,8 @@ public class MigranteHandler {
     public void indentificaMigrante(String nome, int contacto) {
 		if(!CatalogoMigrantes.hasMigrante(nome, contacto)) {
     		CatalogoMigrantes.addMigrante(nome, contacto);
-    		listAjudas = new ArrayList<Ajuda>();
     	}
+		listAjudas = new ArrayList<Ajuda>();
 		m = CatalogoMigrantes.getMigrante(nome, contacto);
     }
     
@@ -78,7 +78,6 @@ public class MigranteHandler {
     	for (Migrante migrante : allMembersList) {
     		for (Ajuda a : listAjudas) {
     			migrante.ajudasSelecionadas.add(a);
-    			sendSMS(a.getVoluntario().getContacto(), "A ajuda:" + a.toString() + "foi requisitada");
 			}
 		}
     	CatalogoAjudas.removeAjudas(listAjudas);
